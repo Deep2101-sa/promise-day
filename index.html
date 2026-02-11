@@ -1,132 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Promise To You</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Promise Day 💖</title>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffeef2;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            text-align: center;
-        }
+<style>
+body {
+    margin: 0;
+    overflow: hidden;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: 'Comic Sans MS', cursive;
+    text-align: center;
+}
 
-        #container {
-            z-index: 10;
-        }
+/* Button */
+#startBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px 40px;
+    font-size: 24px;
+    border: none;
+    border-radius: 50px;
+    background: #ff4b6e;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 20px pink;
+    transition: 0.3s;
+}
 
-        .promise-btn {
-            padding: 20px 40px;
-            font-size: 24px;
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
-            transition: transform 0.3s ease;
-        }
+#startBtn:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 40px red;
+}
 
-        .promise-btn:hover {
-            transform: scale(1.1);
-            background-color: #ff758f;
-        }
+/* Promise Text */
+#promiseText {
+    display: none;
+    font-size: 30px;
+    color: white;
+    margin-top: 20%;
+    text-shadow: 0 0 10px red;
+}
 
-        #celebration {
-            display: none;
-        }
+/* Hands */
+#hands {
+    display: none;
+    font-size: 100px;
+    animation: shake 1s infinite alternate;
+}
 
-        h1 {
-            color: #ff4d6d;
-            font-size: 2rem;
-            margin-bottom: 20px;
-        }
+@keyframes shake {
+    0% { transform: rotate(-10deg); }
+    100% { transform: rotate(10deg); }
+}
 
-        .hand-container {
-            font-size: 80px;
-            display: inline-block;
-            animation: shake 1.5s infinite ease-in-out;
-        }
+/* Falling items */
+.fall {
+    position: absolute;
+    font-size: 25px;
+    animation: fall linear infinite;
+}
 
-        @keyframes shake {
-            0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-10deg); }
-            75% { transform: rotate(10deg); }
-        }
-
-        .particle {
-            position: fixed;
-            top: -50px;
-            z-index: 5;
-            user-select: none;
-            pointer-events: none;
-            animation: fall linear forwards;
-        }
-
-        @keyframes fall {
-            to {
-                transform: translateY(110vh) rotate(360deg);
-            }
-        }
-    </style>
+@keyframes fall {
+    0% { transform: translateY(-100px); }
+    100% { transform: translateY(100vh); }
+}
+</style>
 </head>
+
 <body>
 
-    <div id="container">
-        <button id="startBtn" class="promise-btn" onclick="startPromise()">Touch Me ❤️</button>
+<button id="startBtn">Touch Me 💖</button>
 
-        <div id="celebration">
-            <h1>I Promise to Love You Forever... 💍</h1>
-            <div class="hand-container">🤝</div>
-            <p style="color: #ff4d6d; font-weight: bold; margin-top: 20px;">
-                Happy Promise Day, My Love!
-            </p>
-        </div>
-    </div>
+<div id="hands">🤝</div>
+<div id="promiseText">
+    I Promise You 💍<br>
+    I Love You Forever ❤️<br>
+    And I Will Never Leave You 🌹
+</div>
 
-    <!-- 🎵 New Background Music -->
-    <audio id="bgMusic" loop>
-        <source src="https://www.zedge.net/ringtones/32d42da7-0e96-3d90-beae-7869d38cdfd4">
-    </audio>
+<audio id="bgMusic" src="song.mp3"></audio>
 
-    <script>
-        function startPromise() {
-            document.getElementById('startBtn').style.display = 'none';
-            document.getElementById('celebration').style.display = 'block';
+<script>
+const btn = document.getElementById("startBtn");
+const hands = document.getElementById("hands");
+const text = document.getElementById("promiseText");
+const music = document.getElementById("bgMusic");
 
-            const music = document.getElementById('bgMusic');
-            music.currentTime = 0;
-            music.play().catch(e => console.log("Tap required for audio"));
+btn.addEventListener("click", () => {
+    btn.style.display = "none";
+    hands.style.display = "block";
+    text.style.display = "block";
+    music.play();
+    startRain();
+});
 
-            setInterval(createParticle, 200);
-        }
+function startRain() {
+    setInterval(() => {
+        const item = document.createElement("div");
+        item.classList.add("fall");
+        item.innerHTML = Math.random() > 0.5 ? "❤️" : "🌹";
+        item.style.left = Math.random() * 100 + "vw";
+        item.style.animationDuration = (Math.random() * 3 + 2) + "s";
+        document.body.appendChild(item);
 
-        function createParticle() {
-            const symbols = ['❤️', '🌹', '🌸', '💖', '✨'];
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            
-            particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
-            particle.style.left = Math.random() * 100 + 'vw';
-            particle.style.fontSize = Math.random() * 20 + 20 + 'px';
-            particle.style.animationDuration = Math.random() * 3 + 2 + 's';
-            particle.style.opacity = Math.random();
-
-            document.body.appendChild(particle);
-
-            setTimeout(() => {
-                particle.remove();
-            }, 5000);
-        }
-    </script>
+        setTimeout(() => {
+            item.remove();
+        }, 5000);
+    }, 300);
+}
+</script>
 
 </body>
 </html>
