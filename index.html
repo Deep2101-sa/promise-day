@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Promise To You</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffeef2;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #container {
+            z-index: 10;
+        }
+
+        /* Cute Button Style */
+        .promise-btn {
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .promise-btn:hover {
+            transform: scale(1.1);
+            background-color: #ff758f;
+        }
+
+        /* Hidden Content */
+        #celebration {
+            display: none;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Hand Shaking Animation */
+        .hand-container {
+            font-size: 80px;
+            display: inline-block;
+            animation: shake 1.5s infinite ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
+        }
+
+        /* Falling Elements */
+        .particle {
+            position: fixed;
+            top: -50px;
+            z-index: 5;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <button id="startBtn" class="promise-btn" onclick="startPromise()">Touch Me ❤️</button>
+
+        <div id="celebration">
+            <h1>I Promise to Love You Forever... 💍</h1>
+            <div class="hand-container">🤝</div>
+            <p style="color: #ff4d6d; font-weight: bold; margin-top: 20px;">
+                Happy Promise Day, My Love!
+            </p>
+        </div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        function startPromise() {
+            // Hide button, show content
+            document.getElementById('startBtn').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            
+            // Play Music
+            const music = document.getElementById('bgMusic');
+            music.play().catch(e => console.log("Audio needs user interaction first"));
+
+            // Start Rain
+            setInterval(createParticle, 200);
+        }
+
+        function createParticle() {
+            const symbols = ['❤️', '🌹', '🌸', '💖', '✨'];
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.fontSize = Math.random() * 20 + 20 + 'px';
+            particle.style.animationDuration = Math.random() * 3 + 2 + 's';
+            particle.style.opacity = Math.random();
+
+            document.body.appendChild(particle);
+
+            // Remove particle after it falls
+            setTimeout(() => {
+                particle.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
+
