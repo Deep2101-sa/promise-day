@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Promise To You</title>
+
     <style>
         body {
             margin: 0;
@@ -22,7 +23,6 @@
             z-index: 10;
         }
 
-        /* Cute Button Style */
         .promise-btn {
             padding: 20px 40px;
             font-size: 24px;
@@ -40,7 +40,6 @@
             background-color: #ff758f;
         }
 
-        /* Hidden Content */
         #celebration {
             display: none;
         }
@@ -51,7 +50,6 @@
             margin-bottom: 20px;
         }
 
-        /* Hand Shaking Animation */
         .hand-container {
             font-size: 80px;
             display: inline-block;
@@ -64,7 +62,6 @@
             75% { transform: rotate(10deg); }
         }
 
-        /* Falling Elements */
         .particle {
             position: fixed;
             top: -50px;
@@ -95,21 +92,20 @@
         </div>
     </div>
 
+    <!-- 🎵 New Background Music -->
     <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://www.zedge.net/ringtones/32d42da7-0e96-3d90-beae-7869d38cdfd4">
     </audio>
 
     <script>
         function startPromise() {
-            // Hide button, show content
             document.getElementById('startBtn').style.display = 'none';
             document.getElementById('celebration').style.display = 'block';
-            
-            // Play Music
-            const music = document.getElementById('bgMusic');
-            music.play().catch(e => console.log("Audio needs user interaction first"));
 
-            // Start Rain
+            const music = document.getElementById('bgMusic');
+            music.currentTime = 0;
+            music.play().catch(e => console.log("Tap required for audio"));
+
             setInterval(createParticle, 200);
         }
 
@@ -126,12 +122,11 @@
 
             document.body.appendChild(particle);
 
-            // Remove particle after it falls
             setTimeout(() => {
                 particle.remove();
             }, 5000);
         }
     </script>
+
 </body>
 </html>
-
